@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Musherefa Masged</title>
+  </head>
+  <body class="container-fluid col">
+
+
+    <div class="row" style="float: right; margin: 10px;">
+        <div class="row" style="float: right; margin: 10px;">
+            <div class="card" style="text-align: right; width: 18rem; height: 23.5rem; margin-right: 10px; float: right;">
+                <div class="card-header">
+                أوقات الصلاة، مشيرفة (بالتقريب)
+                </div>
+                <div class="card-body">
+                    {% for item in pt %}
+                    <p class="card-text">{{item}}</p><br />
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <form method="post" action="/a" style="margin: 10px; text-align: right; width: 20rem;">
+            <p><input type="date" name="ddate" /> تاريخ</p><br />
+            <p><input type="time" name="ttime" value="13:00" /> ساعة</p><br />
+            <p><input type="text" name="details" style="text-align: right;" /> تفاصيل</p><br />
+            <input type="submit" value="أضف" />
+        </form>
+    </div>
+
+
+    <table class="table table-striped" style="text-align: right;">
+        <thead>
+          <tr>
+            <th scope="row"></th>
+            <th scope="row">تاريخ</th>
+            <th scope="row">ساعة</th>
+            <th scope="row">تفاصيل</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+                <tr>
+                    <td><form method="post" action="/dele"><input type="text" value="{{item[0]}}" name="hashtag" hidden /><input onclick="return confirm('متأكد من حذف الحدث؟')" type="submit" style="color: red;" value="&times;" /></form></td>
+                    <td>{{item[1]}}</td>
+                    <td>{{item[2]}}</td>
+                    <td>{{item[3]}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
