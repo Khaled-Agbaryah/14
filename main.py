@@ -6,15 +6,18 @@ import os
 from werkzeug.utils import redirect
 from random import randint
 from time import time
+import json
+
+configs = json.load(open('config.json'))
 
 app = Flask(__name__)
-app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'masgeddb'
+app.config['MYSQL_HOST'] = str(configs['mysql-db']['host'])
+app.config['MYSQL_USER'] = str(configs['mysql-db']['user'])
+app.config['MYSQL_PASSWORD'] = str(configs['mysql-db']['password'])
+app.config['MYSQL_DB'] = str(configs['mysql-db']['database'])
 mysql = MySQL(app)
 app.secret_key = 'sdgkdncnipewivb24968956dlvkn'
-somestr = '1029526970001032547698001210934785627346'
+somestr = '102952697000msherfa123001210934785627346'
 someotherstr = str(randint(-1000000000, 1000000001)) + str(time()*100000000) + str(randint(-1000000000, 1000000001))
 noimgs = len(os.listdir(os.path.join('./', 'ad3ya')))
 
@@ -52,7 +55,7 @@ def getdata():
     cur = mysql.connection.cursor()
     d1 = datetime.today() - timedelta(days=2)
     d2 = datetime.today() + timedelta(days=7)
-    sql = "SELECT * FROM events WHERE ddate BETWEEN '{}-{}-{}' AND '{}-{}-{}' ORDER BY ddate ASC".format(d1.year, d1.month, d1.day, d2.year, d2.month, d2.day)
+    sql = f"SELECT * FROM {configs['mysql-db']['table']} WHERE ddate BETWEEN '{d1.year}-{d1.month}-{d1.day}' AND '{d2.year}-{d2.month}-{d2.day}' ORDER BY ddate ASC"
     cur.execute(sql)
     data = cur.fetchall()
     mysql.connection.commit()
@@ -76,12 +79,12 @@ def adde():
         return redirect("/l")
     if request.method == 'POST':
         data = request.form
+        print(data)
         cur = mysql.connection.cursor()
-        sql = "INSERT INTO events (ddate, ttime, details) VALUES ('" + data['ddate'] + "','" + data['ttime'] + "','" + data['details'] + "');"
+        sql = f"INSERT INTO {configs['mysql-db']['table']} (ddate, day, name, event, time) VALUES ('{data['ddate']}', '{data['day']}', '{data['name']}', '{data['event']}', '{data['time']}');"
         cur.execute(sql)
         mysql.connection.commit()
         cur.close()
-        return redirect(request.path)
     return render_template('adde.html', data=getdata(), pt=static.pt)
 
 @app.route('/dele', methods=['GET', 'POST'])
@@ -98,7 +101,7 @@ def dele():
     if (not hashtag.isnumeric()) or int(hashtag) < -1:
         abort(404)
     cur = mysql.connection.cursor()
-    sql = "DELETE FROM events WHERE hashtag LIKE " + hashtag + ";"
+    sql = f"DELETE FROM {configs['mysql-db']['table']} WHERE id LIKE " + hashtag + ";"
     cur.execute(sql)
     mysql.connection.commit()
     cur.close()
@@ -114,7 +117,7 @@ def login():
         data = request.form
         print(data)
         print(''.join([data['p' + str(i+1)] for i in range(5)]))
-        if ''.join([data['p' + str(i+1)] for i in range(5)]) == somestr[12:22]:
+        if ''.join([data['p' + str(i+1)] for i in range(5)]) == '1'+'1'+somestr[12:22]+'1'+'1':
             session['v'] = someotherstr
             return redirect("/a")
         if request.remote_addr not in static.trys:
@@ -132,8 +135,8 @@ def ad3ya():
     if 'imgno' not in session:
         session['imgno'] = 1
     if int(session.get('imgno')) >= noimgs:
-        session['imgno'] = 0
+        session['imgno'] = 1
     session['imgno'] += 1
     return send_from_directory(os.path.join('./', 'ad3ya'), str(session.get('imgno')) + '.jpg')
 
-app.run(host='0.0.0.0', port=80, debug=False)
+app.run(host=configs['server']['host'], port=configs['server']['port'], debug=configs['server']['debug'])

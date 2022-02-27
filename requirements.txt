@@ -4,3 +4,5 @@ flask_mysqldb
 requests
 werkzeug
 os
+mysql
+mysql.connector
