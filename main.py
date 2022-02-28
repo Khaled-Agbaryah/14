@@ -60,6 +60,7 @@ def getdata():
     data = cur.fetchall()
     mysql.connection.commit()
     cur.close()
+    print(data)
     return data
 
 @app.before_request

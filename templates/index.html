@@ -12,9 +12,9 @@
   </head>
   <body class="container-fluid col">
       
-    <img src="/ad3ya?time={{sometimevar}}" width="50%" height="50%" style="float: right; margin-right: 41%; margin-bottom: 7%;" />
+    <img id="imgduaa" src="/ad3ya?time={{sometimevar}}" style="float: right;" />
 
-    <table class="table table-striped" style="text-align: right; margin: 5%;">
+    <table id="table-of-events" class="table table-striped" style="text-align: right;">
         <thead>
         <tr>
             <th scope="col"><h4>تاريخ</h4></th>
@@ -27,15 +27,41 @@
         <tbody>
             {% for item in data %}
                 <tr>
-                    <td><h4>{{item['1']}}</h4></td>
-                    <td><h4>{{item['2']}}</h4></td>
-                    <td><h4>{{item['3']}}</h4></td>
-                    <td><h4>{{item['4']}}</h4></td>
-                    <td><h4>{{item['5']}}</h4></td>
+                    <td><h4>{{item[1]}}</h4></td>
+                    <td><h4>{{item[2]}}</h4></td>
+                    <td><h4>{{item[3]}}</h4></td>
+                    <td><h4>{{item[4]}}</h4></td>
+                    <td><h4>{{item[5]}}</h4></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <script>
+        var imgduaa = document.getElementById("imgduaa");
+        // set imgduaa height to 80% of screen height
+        imgduaa.style.height = screen.height * 0.60 + "px";
+        // set imgduaa width to 90% of screen height
+        imgduaa.style.width = screen.width * 0.7 + "px";
+        // set imgduaa margin-right to 5% of screen width
+        imgduaa.style.marginRight = screen.width * 0.15 + "px";
+        // set imgduaa margin-left to 5% of screen height
+        imgduaa.style.marginLeft = screen.width * 0.15 + "px";
+        // set imgduaa margin-bottom to 1% of screen height
+        imgduaa.style.marginBottom = screen.height * 0.01 + "px";
+        // set imgduaa margin-top to 1% of screen height
+        imgduaa.style.marginTop = screen.height * 0.01 + "px";
+
+        var table = document.getElementById("table-of-events");
+        // set table-of-events height to 10% of screen width
+        table.style.height = screen.width * 0.1 + "px";
+        // set table-of-events width to 90% of screen height
+        table.style.width = screen.width * 0.9 + "px";
+        // set table-of-events margin-right to 5% of screen width
+        table.style.marginRight = screen.width * 0.05 + "px";
+        // set table-of-events margin-left to 5% of screen width
+        table.style.marginLeft = screen.width * 0.05 + "px";
+    </script>
 
     <script>
         function newDu3aa(){

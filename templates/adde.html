@@ -63,11 +63,11 @@
             {% for item in data %}
                 <tr>
                     <td><form method="post" action="/dele"><input type="text" value="{{item[0]}}" name="hashtag" hidden /><input onclick="return confirm('متأكد من حذف الحدث؟')" type="submit" style="color: red;" value="&times;" /></form></td>
-                    <td><h4>{{item['1']}}</h4></td>
-                    <td><h4>{{item['2']}}</h4></td>
-                    <td><h4>{{item['3']}}</h4></td>
-                    <td><h4>{{item['4']}}</h4></td>
-                    <td><h4>{{item['5']}}</h4></td>
+                    <td><h4>{{item[1]}}</h4></td>
+                    <td><h4>{{item[2]}}</h4></td>
+                    <td><h4>{{item[3]}}</h4></td>
+                    <td><h4>{{item[4]}}</h4></td>
+                    <td><h4>{{item[5]}}</h4></td>
                 </tr>
             {% endfor %}
         </tbody>
