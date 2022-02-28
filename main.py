@@ -21,7 +21,7 @@ somestr = '102952697000msherfa123001210934785627346'
 someotherstr = str(randint(-1000000000, 1000000001)) + str(time()*100000000) + str(randint(-1000000000, 1000000001))
 noimgs = len(os.listdir(os.path.join('./', 'ad3ya')))
 
-latitude, longitude = open('config/coordinates.txt').read().split(',')
+latitude, longitude = configs['masjed']['latitude'], configs['masjed']['longitude']
 
 def get_pt():
     pt = []
@@ -60,7 +60,6 @@ def getdata():
     data = cur.fetchall()
     mysql.connection.commit()
     cur.close()
-    print(data)
     return data
 
 @app.before_request
@@ -70,7 +69,7 @@ def make_session_permanent():
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', data=getdata(), pt=static.pt, sometimevar=time())
+    return render_template('index.html', data=getdata(), pt=static.pt, sometimevar=time(), masjed_name=configs['masjed']['name'])
 
 @app.route('/a', methods=['POST', 'GET'])
 def adde():
@@ -86,7 +85,7 @@ def adde():
         cur.execute(sql)
         mysql.connection.commit()
         cur.close()
-    return render_template('adde.html', data=getdata(), pt=static.pt)
+    return render_template('adde.html', data=getdata(), pt=static.pt, masjed_name=configs['masjed']['name'])
 
 @app.route('/dele', methods=['GET', 'POST'])
 def dele():
@@ -125,7 +124,7 @@ def login():
             static.trys[str(request.remote_addr)] = 1
         else:
             static.trys[str(request.remote_addr)] = int(static.trys.get(str(request.remote_addr))) + 1
-        return render_template("login.html")
+        return render_template("login.html", masjed_name=configs['masjed']['name'])
 
 @app.route('/favicon.ico')
 def favicon():

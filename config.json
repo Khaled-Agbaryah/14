@@ -12,6 +12,12 @@
     {
         "host": "0.0.0.0",
         "port": 80,
-        "debug": true
+        "debug": false
+    },
+    "masjed":
+    {
+        "name": "masjed msherfa",
+        "longitude": "35.153387",
+        "latitude": "32.553233"
     }
 }
